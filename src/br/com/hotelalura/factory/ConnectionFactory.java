@@ -15,9 +15,7 @@ public class ConnectionFactory {
 
 
 
-    public ConnectionFactory() {
-        ComboPooledDaataSOUce
-    }
+   
     //NOME DO USUÁRIO DO MYSQL
     private static final String USERNAME = "root";
 
