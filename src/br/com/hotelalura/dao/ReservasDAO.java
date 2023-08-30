@@ -1,10 +1,6 @@
 package br.com.hotelalura.dao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,17 +32,21 @@ public class ReservasDAO {
             conn = ConnectionFactory.createConccectionToMySql();
 
             //CRIAMOS UMA PREPAREDSTRAMENT, PARA EXECUTAR UMA QUERY
-            pstm = (PreparedStatement) conn.prepareStatement(sql);
+            pstm = (PreparedStatement) conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
             //ADICIONAR OS VALORES QUE SÃO ESPERADOS PELA QUERY
             pstm.setDate(1, new Date(reservas.getDataEntrada().getTime()));
             pstm.setDate(2,new Date(reservas.getDataSaida().getTime()));
             pstm.setString(3,reservas.getValor());
             pstm.setString(4, reservas.getFormaPagamento());
-
             //EXECUTAR A QUERY
             pstm.execute();
             // Obtendo o ID gerado pelo banco de dados
-
+            try (ResultSet resultSet = pstm.getGeneratedKeys()) {
+                while (resultSet.next()) {
+                    reservas.setId(resultSet.getInt(1));
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,6 +89,7 @@ public class ReservasDAO {
             pstm.setInt(4, reservas.getId());
 
             pstm.execute();
+            
             System.out.println("Atualizado com sucesso");
         }catch (Exception e) {
             e.printStackTrace();

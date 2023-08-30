@@ -26,9 +26,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import br.com.hotelalura.controller.*;
+import br.com.hotelalura.dao.*;
 import com.toedter.calendar.JDateChooser;
 
-import br.com.hotelalura.dao.ReservasDAO;
 import br.com.hotelalura.model.Reservas;
 
 
@@ -44,6 +45,8 @@ public class ReservasView extends JFrame {
     private JLabel labelExit;
     private JLabel lblValorSimbolo;
     private JLabel labelAtras;
+    private ReservaController reservaController;
+
     /**
      * Launch the application.
      */
@@ -62,6 +65,7 @@ public class ReservasView extends JFrame {
 
     /**
      * Create the frame.
+     *
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -81,7 +85,6 @@ public class ReservasView extends JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setUndecorated(true);
-
 
 
         JPanel panel = new JPanel();
@@ -161,7 +164,6 @@ public class ReservasView extends JFrame {
         panel.add(txtDataS);
 
 
-
         txtValor = new JTextField();
         txtValor.setBackground(SystemColor.text);
         txtValor.setHorizontalAlignment(SwingConstants.CENTER);
@@ -184,7 +186,7 @@ public class ReservasView extends JFrame {
         txtFormaPagamento.setBackground(SystemColor.text);
         txtFormaPagamento.setBorder(new LineBorder(new Color(255, 255, 255), 1, true));
         txtFormaPagamento.setFont(new Font("Roboto", Font.PLAIN, 16));
-        txtFormaPagamento.setModel(new DefaultComboBoxModel(new String[] {"Cartão de Crédito", "Cartão de Débito", "Dinheiro"}));
+        txtFormaPagamento.setModel(new DefaultComboBoxModel(new String[]{"Cartão de Crédito", "Cartão de Débito", "Dinheiro"}));
         panel.add(txtFormaPagamento);
 
         JLabel lblFormaPago = new JLabel("FORMA DE PAGAMENTO");
@@ -224,11 +226,13 @@ public class ReservasView extends JFrame {
                 principal.setVisible(true);
                 dispose();
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 btnexit.setBackground(Color.red);
                 labelExit.setForeground(Color.white);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 btnexit.setBackground(new Color(12, 138, 199));
@@ -274,11 +278,13 @@ public class ReservasView extends JFrame {
                 usuario.setVisible(true);
                 dispose();
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 btnAtras.setBackground(new Color(12, 138, 199));
                 labelAtras.setForeground(Color.white);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 btnAtras.setBackground(Color.white);
@@ -308,11 +314,6 @@ public class ReservasView extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if (ReservasView.txtDataE.getDate() != null && ReservasView.txtDataS.getDate() != null) {
                     salvaReserva();
-
-                    RegistroHospede registro = new RegistroHospede();
-                    registro.setVisible(true);
-
-                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
                 }
@@ -336,14 +337,18 @@ public class ReservasView extends JFrame {
     private void salvaReserva() {
         String dataEntrada = ((JTextField) txtDataE.getDateEditor().getUiComponent()).getText();
         String dataSaida = ((JTextField) txtDataS.getDateEditor().getUiComponent()).getText();
-        Reservas novaReserva = new Reservas(
-                java.sql.Date.valueOf(dataEntrada),
-                java.sql.Date.valueOf(dataSaida),txtValor.getText(),
-                txtFormaPagamento.getSelectedItem().toString());
-        ReservasDAO d = new ReservasDAO();
-        d.salvar(novaReserva);
+        Reservas novaReserva = new Reservas(java.sql.Date.valueOf(dataEntrada), java.sql.Date.valueOf(dataSaida), txtValor.getText(), txtFormaPagamento.getSelectedItem().toString());
+        this.reservaController = new ReservaController();
+        reservaController.salvar(novaReserva);
 
-        JOptionPane.showMessageDialog(contentPane, "Reserva salvo, seu id: "+ novaReserva.getId());
+        JOptionPane.showMessageDialog(contentPane, "Reserva salvo, Numero de Reserva: " + novaReserva.getId().toString());
+
+        RegistroHospede registroHospede = new RegistroHospede(novaReserva.getId());
+        RegistroHospede registro = new RegistroHospede(novaReserva.getId());
+        registro.setVisible(true);
+
+        dispose();
+
     }
 
     private void calcularValor(JDateChooser dataEntrada, JDateChooser dataSaida) {
@@ -354,9 +359,9 @@ public class ReservasView extends JFrame {
             int dias = -1;
             int valor;
 
-            while(inicio.before(fim)||inicio.equals(fim)) {
+            while (inicio.before(fim) || inicio.equals(fim)) {
                 dias++;
-                inicio.add(Calendar.DATE,1);
+                inicio.add(Calendar.DATE, 1);
             }
 
             valor = diaria * dias;

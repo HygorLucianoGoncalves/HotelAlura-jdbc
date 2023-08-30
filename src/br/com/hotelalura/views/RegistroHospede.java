@@ -1,7 +1,6 @@
 package br.com.hotelalura.views;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -15,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -25,9 +23,7 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 
 import br.com.hotelalura.dao.HospedesDAO;
-import br.com.hotelalura.dao.ReservasDAO;
 import br.com.hotelalura.model.Hospedes;
-import br.com.hotelalura.model.Reservas;
 
 @SuppressWarnings("serial")
 public class RegistroHospede extends JFrame {
@@ -43,26 +39,26 @@ public class RegistroHospede extends JFrame {
     private JLabel labelAtras;
     int xMouse, yMouse;
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    RegistroHospede frame = new RegistroHospede();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    /**
+//     * Launch the application.
+//     */
+//    public static void main(String[] args) {
+//        EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                try {
+//                    RegistroHospede frame = new RegistroHospede();
+//                    frame.setVisible(true);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
 
     /**
      * Create the frame.
      */
-    public RegistroHospede() {
+    public RegistroHospede(Integer id) {
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHospede.class.getResource("/br/com/hotelalura/imagenes/lOGO-50PX.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
