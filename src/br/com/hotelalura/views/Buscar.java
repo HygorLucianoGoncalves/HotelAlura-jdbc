@@ -24,6 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import br.com.hotelalura.controller.*;
 import br.com.hotelalura.dao.HospedesDAO;
 import br.com.hotelalura.dao.ReservasDAO;
 import br.com.hotelalura.model.Hospedes;
@@ -41,6 +42,7 @@ public class Buscar extends JFrame {
     private JLabel labelAtras;
     private JLabel labelExit;
     int xMouse, yMouse;
+    private ReservaController reservaController;
 
     /**
      * Launch the application.
@@ -216,9 +218,10 @@ public class Buscar extends JFrame {
         btnbuscar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                preencherTabelaReservas();
+                if(txtBuscar == null){
+                    preencherTabelaReservas();
+                }
                 if (txtBuscar != null) {
-                    System.out.println("entrou");
                     buscarReservasById();
                     System.out.println("OK");
                 }
@@ -338,32 +341,37 @@ public class Buscar extends JFrame {
 
 
     //BUSCA RESERVAS
-    private ReservasDAO reservasDAO;
+   
 
     private Reservas buscarReservasById(){
-        return this.reservasDAO.buscaReservaById(Integer.parseInt(txtBuscar.getText()));
+        this.reservaController = new ReservaController();
+        String txt = txtBuscar.getText();
+        Reservas reservas = this.reservaController.buscarById(Integer.valueOf(Integer.parseInt(txt)));
+        return reservas;
     }
 
-    private void preencherTabelaReservasByI() {
+    private void preencherTabelaReservasById() {
 
-        List<Reservas> reservaLista = buscarReservas();
+        Reservas reserva = buscarReservasById();
         try {
-            for(Reservas reservas:reservaLista) {
+            if (reserva != null) {
                 modelo.addRow(new Object[] {
-                        reservas.getId(),
-                        reservas.getDataEntrada(),
-                        reservas.getDataSaida(),
-                        reservas.getValor(),
-                        reservas.getFormaPagamento()
+                        reserva.getId(),
+                        reserva.getDataEntrada(),
+                        reserva.getDataSaida(),
+                        reserva.getValor(),
+                        reserva.getFormaPagamento()
                 });
             }
+            
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
     }
 
     private List<Reservas> buscarReservas(){
-        return this.reservasDAO.buscaReservas();
+        this.reservaController = new ReservaController();
+        return this.reservaController.buscar();
     }
 
     private void preencherTabelaReservas() {
