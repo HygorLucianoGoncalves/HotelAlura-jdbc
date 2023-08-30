@@ -1,21 +1,11 @@
 package br.com.hotelalura.factory;
 
 
+import javax.sql.*;
+import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-
-
-import javax.sql.DataSource;
 
 public class ConnectionFactory {
-
-
-    private DataSource dataSource;
-
-
-
-   
     //NOME DO USUÁRIO DO MYSQL
     private static final String USERNAME = "root";
 
