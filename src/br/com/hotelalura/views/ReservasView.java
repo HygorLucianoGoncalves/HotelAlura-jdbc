@@ -342,8 +342,7 @@ public class ReservasView extends JFrame {
         reservaController.salvar(novaReserva);
 
         JOptionPane.showMessageDialog(contentPane, "Reserva salvo, Numero de Reserva: " + novaReserva.getId().toString());
-
-        RegistroHospede registroHospede = new RegistroHospede(novaReserva.getId());
+        
         RegistroHospede registro = new RegistroHospede(novaReserva.getId());
         registro.setVisible(true);
 

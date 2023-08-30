@@ -14,7 +14,7 @@ import br.com.hotelalura.model.Reservas;
 
 public class HospedesDAO {
 
-    public static void salvar(Hospedes hospedes) {
+    public void salvar(Hospedes hospedes) {
 
         String sql = "INSERT INTO hospedes(nome, sobrenome, dataNascimento, nacionalidade, telefone, idReserva ) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -30,7 +30,7 @@ public class HospedesDAO {
             pstm = (PreparedStatement) conn.prepareStatement(sql);
 
             //ADICIONAR OS VALORES QUE SÃO ESPERADOS PELA QUERY
-            pstm.setString(1,hospedes.getNome());
+            pstm.setString(1, hospedes.getNome());
             pstm.setString(2, hospedes.getSobrenome());
             pstm.setDate(3, new Date(hospedes.getDataNascimento().getTime()));
             pstm.setString(4, hospedes.getNacionalidade());
@@ -51,18 +51,16 @@ public class HospedesDAO {
             //FECHAR AS CONEXÕES
             try {
 
-                if (pstm!=null) {
+                if (pstm != null) {
                     pstm.close();
                 }
 
-                if (conn!=null) {
+                if (conn != null) {
                     conn.close();
                 }
 
             } catch (Exception e2) {
-
                 e2.printStackTrace();
-
             }
         }
 
@@ -83,7 +81,7 @@ public class HospedesDAO {
 
             //ADICIONAR OS VALORES PARA ATUALIZAR
             //ADICIONAR OS VALORES QUE SÃO ESPERADOS PELA QUERY
-            pstm.setString(1,hospedes.getNome());
+            pstm.setString(1, hospedes.getNome());
             pstm.setString(2, hospedes.getSobrenome());
             pstm.setDate(3, new Date(hospedes.getDataNascimento().getTime()));
             pstm.setString(4, hospedes.getNacionalidade());
@@ -96,7 +94,7 @@ public class HospedesDAO {
 
             System.out.println("Atualizado com sucesso");
 
-        }catch (Exception e) {
+        } catch (Exception e) {
 
             e.printStackTrace();
 
@@ -105,10 +103,10 @@ public class HospedesDAO {
             //FECHA AS CONEXÕES
             try {
 
-                if (pstm!=null) {
+                if (pstm != null) {
                     pstm.close();
                 }
-                if (conn!=null) {
+                if (conn != null) {
                     conn.close();
                 }
 
@@ -120,7 +118,7 @@ public class HospedesDAO {
         }
     }
 
-    public void deleteById(int id){
+    public void deleteById(int id) {
 
         String sql = "DELETE FROM hospedes WHERE id = ?";
 
@@ -137,20 +135,20 @@ public class HospedesDAO {
 
             pstm.execute();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
 
             e.printStackTrace();
 
-        }finally {
+        } finally {
 
             //FECHA AS CONEXÕES
             try {
 
-                if (pstm!=null) {
+                if (pstm != null) {
                     pstm.close();
                 }
 
-                if (conn!=null) {
+                if (conn != null) {
                     conn.close();
                 }
 
@@ -164,7 +162,7 @@ public class HospedesDAO {
 
     public List<Hospedes> buscarBySobrenome(String sobrenome) {
 
-        String sql =  "SELECT * FROM hospedes WHERE sobrenome = ?";
+        String sql = "SELECT * FROM hospedes WHERE sobrenome = ?";
 
         List<Hospedes> hospedesList = new ArrayList<Hospedes>();
 
@@ -184,15 +182,7 @@ public class HospedesDAO {
 
             while (rset.next()) {
 
-                Hospedes hospedes = new Hospedes(
-                        rset.getInt("id"),
-                        rset.getString("nome"),
-                        rset.getString("sobrenome"),
-                        rset.getDate("dataNascimento"),
-                        rset.getString("nacionalidade"),
-                        rset.getString("telefone"),
-                        rset.getInt("idReservas")
-                );
+                Hospedes hospedes = new Hospedes(rset.getInt("id"), rset.getString("nome"), rset.getString("sobrenome"), rset.getDate("dataNascimento"), rset.getString("nacionalidade"), rset.getString("telefone"), rset.getInt("idReservas"));
 
                 hospedesList.add(hospedes);
 
@@ -209,10 +199,10 @@ public class HospedesDAO {
                 if (rset != null) {
                     rset.close();
                 }
-                if (pstm!=null) {
+                if (pstm != null) {
                     pstm.close();
                 }
-                if (conn!=null) {
+                if (conn != null) {
                     conn.close();
                 }
             } catch (Exception e2) {
@@ -227,7 +217,7 @@ public class HospedesDAO {
 
     public List<Hospedes> buscar() {
 
-        String sql =  "SELECT * FROM hospedes";
+        String sql = "SELECT * FROM hospedes";
 
         List<Hospedes> hospedesList = new ArrayList<Hospedes>();
 
@@ -247,15 +237,7 @@ public class HospedesDAO {
 
             while (rset.next()) {
 
-                Hospedes hospedes = new Hospedes(
-                        rset.getInt("id"),
-                        rset.getString("nome"),
-                        rset.getString("sobrenome"),
-                        rset.getDate("dataNascimento"),
-                        rset.getString("nacionalidade"),
-                        rset.getString("telefone"),
-                        rset.getInt("idReservas")
-                );
+                Hospedes hospedes = new Hospedes(rset.getInt("id"), rset.getString("nome"), rset.getString("sobrenome"), rset.getDate("dataNascimento"), rset.getString("nacionalidade"), rset.getString("telefone"), rset.getInt("idReservas"));
 
                 hospedesList.add(hospedes);
 
@@ -272,10 +254,10 @@ public class HospedesDAO {
                 if (rset != null) {
                     rset.close();
                 }
-                if (pstm!=null) {
+                if (pstm != null) {
                     pstm.close();
                 }
-                if (conn!=null) {
+                if (conn != null) {
                     conn.close();
                 }
             } catch (Exception e2) {

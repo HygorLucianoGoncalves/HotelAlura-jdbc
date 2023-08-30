@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import br.com.hotelalura.controller.*;
 import com.toedter.calendar.JDateChooser;
 
 import br.com.hotelalura.dao.HospedesDAO;
@@ -38,6 +39,7 @@ public class RegistroHospede extends JFrame {
     private JLabel labelExit;
     private JLabel labelAtras;
     int xMouse, yMouse;
+   
 
 //    /**
 //     * Launch the application.
@@ -97,11 +99,13 @@ public class RegistroHospede extends JFrame {
                 principal.setVisible(true);
                 dispose();
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 btnexit.setBackground(Color.red);
                 labelExit.setForeground(Color.white);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 btnexit.setBackground(Color.white);
@@ -137,11 +141,13 @@ public class RegistroHospede extends JFrame {
                 reservas.setVisible(true);
                 dispose();
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 btnAtras.setBackground(Color.white);
                 labelAtras.setForeground(Color.black);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 btnAtras.setBackground(new Color(12, 138, 199));
@@ -188,7 +194,7 @@ public class RegistroHospede extends JFrame {
         txtNacionalidade.setBounds(560, 350, 289, 36);
         txtNacionalidade.setBackground(SystemColor.text);
         txtNacionalidade.setFont(new Font("Roboto", Font.PLAIN, 16));
-        txtNacionalidade.setModel(new DefaultComboBoxModel(new String[] {"alemão", "andorrano", "angolano", "antiguano", "saudita", "argelino", "argentino", "armênio", "australiano", "austríaco", "azerbaijano", "bahamense", "bangladês, bangladense", "barbadiano", "bahreinita", "belga", "belizenho", "beninês", "belarusso", "boliviano", "bósnio", "botsuanês", "brasileiro", "bruneíno", "búlgaro", "burkineonse, burkinabé", "burundês", "butanês", "cabo-verdiano", "camerounês", "cambojano", "catariano", "canadense", "cazaque", "chadiano", "chileno", "chinês", "cipriota", "colombiano", "comoriano", "congolês", "congolês", "sul-coreano", "norte-coreano", "costa-marfinense, marfinense", "costa-ricense", "croata", "cubano", "dinamarquês", "djiboutiano", "dominiquense", "egípcio", "salvadorenho", "emiradense, emirático", "equatoriano", "eritreu", "eslovaco", "esloveno", "espanhol", "estadunidense, (norte-)americano", "estoniano", "etíope", "fijiano", "filipino", "finlandês", "francês", "gabonês", "gambiano", "ganês ou ganense", "georgiano", "granadino", "grego", "guatemalteco", "guianês", "guineense", "guineense, bissau-guineense", "equato-guineense", "haitiano", "hondurenho", "húngaro", "iemenita", "cookiano", "marshallês", "salomonense", "indiano", "indonésio", "iraniano", "iraquiano", "irlandês", "islandês", "34", "jamaicano", "japonês", "jordaniano", "kiribatiano", "kuwaitiano", "laosiano", "lesotiano", "letão", "libanês", "liberiano", "líbio", "liechtensteiniano", "lituano", "luxemburguês", "macedônio", "madagascarense", "malásio37", "malawiano", "maldivo", "maliano", "maltês", "marroquino", "mauriciano", "mauritano", "mexicano", "myanmarense", "micronésio", "moçambicano", "moldovo", "monegasco", "mongol", "montenegrino", "namibiano", "nauruano", "nepalês", "nicaraguense", "nigerino", "nigeriano", "niuiano", "norueguês", "neozelandês", "omani", "neerlandês", "palauano", "palestino", "panamenho", "papua, papuásio", "paquistanês", "paraguaio", "peruano", "polonês, polaco", "português", "queniano", "quirguiz", "britânico", "centro-africano", "tcheco", "dominicano", "romeno", "ruandês", "russo", "samoano", "santa-lucense", "são-cristovense", "samarinês", "santomense", "são-vicentino", "seichelense", "senegalês", "sérvio", "singapurense", "sírio", "somaliano, somali", "sri-lankês", "suázi", "sudanês", "sul-sudanês", "sueco", "suíço", "surinamês", "tajique", "tailandês", "tanzaniano", "timorense", "togolês", "tonganês", "trinitário", "tunisiano", "turcomeno", "turco", "tuvaluano", "ucraniano", "ugandês", "uruguaio", "uzbeque", "vanuatuense", "vaticano", "venezuelano", "vietnamita", "zambiano", "zimbabueano"}));
+        txtNacionalidade.setModel(new DefaultComboBoxModel(new String[]{"alemão", "andorrano", "angolano", "antiguano", "saudita", "argelino", "argentino", "armênio", "australiano", "austríaco", "azerbaijano", "bahamense", "bangladês, bangladense", "barbadiano", "bahreinita", "belga", "belizenho", "beninês", "belarusso", "boliviano", "bósnio", "botsuanês", "brasileiro", "bruneíno", "búlgaro", "burkineonse, burkinabé", "burundês", "butanês", "cabo-verdiano", "camerounês", "cambojano", "catariano", "canadense", "cazaque", "chadiano", "chileno", "chinês", "cipriota", "colombiano", "comoriano", "congolês", "congolês", "sul-coreano", "norte-coreano", "costa-marfinense, marfinense", "costa-ricense", "croata", "cubano", "dinamarquês", "djiboutiano", "dominiquense", "egípcio", "salvadorenho", "emiradense, emirático", "equatoriano", "eritreu", "eslovaco", "esloveno", "espanhol", "estadunidense, (norte-)americano", "estoniano", "etíope", "fijiano", "filipino", "finlandês", "francês", "gabonês", "gambiano", "ganês ou ganense", "georgiano", "granadino", "grego", "guatemalteco", "guianês", "guineense", "guineense, bissau-guineense", "equato-guineense", "haitiano", "hondurenho", "húngaro", "iemenita", "cookiano", "marshallês", "salomonense", "indiano", "indonésio", "iraniano", "iraquiano", "irlandês", "islandês", "34", "jamaicano", "japonês", "jordaniano", "kiribatiano", "kuwaitiano", "laosiano", "lesotiano", "letão", "libanês", "liberiano", "líbio", "liechtensteiniano", "lituano", "luxemburguês", "macedônio", "madagascarense", "malásio37", "malawiano", "maldivo", "maliano", "maltês", "marroquino", "mauriciano", "mauritano", "mexicano", "myanmarense", "micronésio", "moçambicano", "moldovo", "monegasco", "mongol", "montenegrino", "namibiano", "nauruano", "nepalês", "nicaraguense", "nigerino", "nigeriano", "niuiano", "norueguês", "neozelandês", "omani", "neerlandês", "palauano", "palestino", "panamenho", "papua, papuásio", "paquistanês", "paraguaio", "peruano", "polonês, polaco", "português", "queniano", "quirguiz", "britânico", "centro-africano", "tcheco", "dominicano", "romeno", "ruandês", "russo", "samoano", "santa-lucense", "são-cristovense", "samarinês", "santomense", "são-vicentino", "seichelense", "senegalês", "sérvio", "singapurense", "sírio", "somaliano, somali", "sri-lankês", "suázi", "sudanês", "sul-sudanês", "sueco", "suíço", "surinamês", "tajique", "tailandês", "tanzaniano", "timorense", "togolês", "tonganês", "trinitário", "tunisiano", "turcomeno", "turco", "tuvaluano", "ucraniano", "ugandês", "uruguaio", "uzbeque", "vanuatuense", "vaticano", "venezuelano", "vietnamita", "zambiano", "zimbabueano"}));
         contentPane.add(txtNacionalidade);
 
         JLabel lblNome = new JLabel("NOME");
@@ -324,30 +330,15 @@ public class RegistroHospede extends JFrame {
 
     private void salvaHospedes() {
         String dataNacimento = ((JTextField) txtDataN.getDateEditor().getUiComponent()).getText();
-        Hospedes novoHospedes = new Hospedes(
-                txtNome.getText(),
-                txtSobrenome.getText(),
-                java.sql.Date.valueOf(dataNacimento),
-                txtNacionalidade.getSelectedItem().toString(),
-                txtTelefone.getText(),
-                Integer.parseInt(txtNreserva.getText())
-        );
-
-        HospedesDAO hospedesDAO = new HospedesDAO();
-        hospedesDAO.salvar(novoHospedes);
+        Hospedes novoHospedes = new Hospedes(txtNome.getText(), txtSobrenome.getText(), java.sql.Date.valueOf(dataNacimento), txtNacionalidade.getSelectedItem().toString(), txtTelefone.getText(), Integer.parseInt(txtNreserva.getText()));
+        
+        HospedesController hospedesController = new HospedesController();
+        hospedesController.salvar(novoHospedes);
 
         Sucesso s = new Sucesso();
         s.setVisible(true);
         dispose();
     }
-
-
-
-
-
-
-
-
 
 
     //Código que permite movimentar a janela pela tela seguindo a posição de "x" y "y"
@@ -361,7 +352,6 @@ public class RegistroHospede extends JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }
-
 
 
 }
