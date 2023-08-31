@@ -201,10 +201,12 @@ public class ReservasDAO {
 
     }
 
-    public Reservas buscaReservaById(int id) {
+    public List<Reservas> buscaReservaById(int id) {
 
         String sql = "SELECT * FROM reservas WHERE id = ?";
-        Reservas reserva = null;
+
+        List<Reservas> reservas = new ArrayList<Reservas>();
+
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -218,39 +220,47 @@ public class ReservasDAO {
 
             rset = pstm.executeQuery();
 
-            if (rset.next()) {
+            while (rset.next()) {
 
-                reserva = new Reservas();
+                Reservas reservas2 = new Reservas();
 
-                reserva.setId(rset.getInt(1));
-                reserva.setDataEntrada(rset.getDate(2));
-                reserva.setDataSaida(rset.getDate(3));
-                reserva.setValor(rset.getString(4));
-                reserva.setFormaPagamento(rset.getString(5));
+                // RECUPERA O ID
+                reservas2.setId(rset.getInt(1));
+                // RECUPERAR A DATA DE ENTRADA
+                reservas2.setDataEntrada(rset.getDate(2));
+                //RECUPERA A DATA DE SAIDA
+                reservas2.setDataSaida(rset.getDate(3));
+                //RECUPERA O VALOR DA RESERVA
+                reservas2.setValor(rset.getString(4));
+
+                reservas2.setFormaPagamento(rset.getString(5));
+
+                reservas.add(reservas2);
+
             }
         } catch (Exception e) {
-
             e.printStackTrace();
-
-        } finally {
-
+            // TODO: handle exception
+        }finally {
+            //fechar as conexões
             try {
                 if (rset != null) {
                     rset.close();
                 }
-                if (pstm != null) {
+                if (pstm!=null) {
                     pstm.close();
                 }
-                if (conn != null) {
+                if (conn!=null) {
                     conn.close();
                 }
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
         }
+        return reservas;
 
-        return reserva;
     }
+
 
 
 }

@@ -12,7 +12,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -26,7 +25,6 @@ import javax.swing.table.DefaultTableModel;
 
 import br.com.hotelalura.controller.*;
 import br.com.hotelalura.dao.HospedesDAO;
-import br.com.hotelalura.dao.ReservasDAO;
 import br.com.hotelalura.model.Hospedes;
 import br.com.hotelalura.model.Reservas;
 
@@ -218,14 +216,13 @@ public class Buscar extends JFrame {
         btnbuscar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                preencherTabelaReservasById();
+                    //preencherTabelaReservas();
 
-                    System.out.println("entrou");
-                    preencherTabelaReservas();
 
-                if (txtBuscar != null) {
-                    buscarReservasById();
-                    System.out.println("OK");
-                }
+
+
+
             }
         });
         btnbuscar.setLayout(null);
@@ -344,32 +341,31 @@ public class Buscar extends JFrame {
     //BUSCA RESERVAS
    
 
-    private Reservas buscarReservasById(){
+    private List<Reservas> buscarReservasById(JTextField id){
         this.reservaController = new ReservaController();
-        String txt = txtBuscar.getText();
-        Reservas reservas = this.reservaController.buscarById(Integer.valueOf(Integer.parseInt(txt)));
-        return reservas;
+        int a = Integer.parseInt(id.getText());
+        return this.reservaController.buscarById(a);
+
+
     }
 
     private void preencherTabelaReservasById() {
 
-        Reservas reserva = buscarReservasById();
+        List<Reservas> reservaLista = buscarReservasById(txtBuscar);
         try {
-            if (reserva != null) {
+            for(Reservas reservas:reservaLista) {
                 modelo.addRow(new Object[] {
-                        reserva.getId(),
-                        reserva.getDataEntrada(),
-                        reserva.getDataSaida(),
-                        reserva.getValor(),
-                        reserva.getFormaPagamento()
+                        reservas.getId(),
+                        reservas.getDataEntrada(),
+                        reservas.getDataSaida(),
+                        reservas.getValor(),
+                        reservas.getFormaPagamento()
                 });
             }
-            
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
-
     private List<Reservas> buscarReservas(){
         this.reservaController = new ReservaController();
         return this.reservaController.buscar();

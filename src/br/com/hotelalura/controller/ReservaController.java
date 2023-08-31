@@ -28,7 +28,7 @@ public class ReservaController {
         this.reservasDAO.deleteById(id);
     }
     
-    public Reservas buscarById(int id){
+    public List<Reservas> buscarById(int id){
         return  this.reservasDAO.buscaReservaById(id);
       
     }
