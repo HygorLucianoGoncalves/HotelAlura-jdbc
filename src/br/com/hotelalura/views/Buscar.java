@@ -218,9 +218,10 @@ public class Buscar extends JFrame {
         btnbuscar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(txtBuscar == null){
+
+                    System.out.println("entrou");
                     preencherTabelaReservas();
-                }
+
                 if (txtBuscar != null) {
                     buscarReservasById();
                     System.out.println("OK");
