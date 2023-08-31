@@ -11,19 +11,25 @@ public class HospedesController {
     public HospedesController() {
         this.hospedesDAO = new HospedesDAO();
     }
-    
-    public void salvar(Hospedes hospedes){
+
+    public void salvar(Hospedes hospedes) {
         this.hospedesDAO.salvar(hospedes);
     }
-    public List<Hospedes> buscar(){
+
+    public List<Hospedes> buscar() {
         return this.hospedesDAO.buscar();
     }
-    
-    public void atualizar(Hospedes hospedes){
+
+    public void atualizar(Hospedes hospedes) {
         this.hospedesDAO.atualizar(hospedes);
     }
-    
-    public void deleta(int id){
+
+    public void deleta(int id) {
         this.hospedesDAO.deleteById(id);
     }
+    
+    public List<Hospedes> buscaBySobrenome(String sobreNome){
+        return  this.hospedesDAO.buscarBySobrenome(sobreNome);
+    }
+    
 }

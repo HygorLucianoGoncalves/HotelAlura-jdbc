@@ -35,8 +35,8 @@ public class ReservasDAO {
             pstm = (PreparedStatement) conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
             //ADICIONAR OS VALORES QUE SÃO ESPERADOS PELA QUERY
-            pstm.setDate(1, new Date(reservas.getDataEntrada().getTime()));
-            pstm.setDate(2,new Date(reservas.getDataSaida().getTime()));
+            pstm.setDate(1, reservas.getDataEntrada());
+            pstm.setDate(2, reservas.getDataSaida());
             pstm.setString(3,reservas.getValor());
             pstm.setString(4, reservas.getFormaPagamento());
             //EXECUTAR A QUERY
@@ -81,8 +81,8 @@ public class ReservasDAO {
 
             //ADICIONAR OS VALORES PARA ATUALIZAR
             //ADICIONAR OS VALORES QUE SÃO ESPERADOS PELA QUERY
-            pstm.setDate(1, new Date(reservas.getDataEntrada().getTime()));
-            pstm.setDate(2,new Date(reservas.getDataSaida().getTime()));
+            pstm.setDate(1, reservas.getDataEntrada());
+            pstm.setDate(2, reservas.getDataSaida());
             pstm.setString(3, reservas.getFormaPagamento());
 
             //QUAL O ID DO REGISTRO QUE DESEJA ATUALIZAR
