@@ -71,7 +71,6 @@ public class ReservasView extends JFrame {
      */
     public ReservasView() throws Exception {
         super("Reserva");
-        //Connection conn = ConnectionFactory.createConccectionToMySql();
 
         setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/br/com/hotelalura/imagenes/aH-40px.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
