@@ -89,8 +89,7 @@ public class ReservasDAO {
             pstm.setInt(4, reservas.getId());
 
             pstm.execute();
-            
-            System.out.println("Atualizado com sucesso");
+            JOptionPane.showMessageDialog(null,"Atualizado com sucesso");
         }catch (Exception e) {
             e.printStackTrace();
         } finally {

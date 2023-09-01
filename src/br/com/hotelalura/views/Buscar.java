@@ -214,15 +214,11 @@ public class Buscar extends JFrame {
         btnbuscar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                if (txtBuscar.equals(null)) {
-                    System.out.println("Entrou aquu");
                     preencherTabelaReservas();
                     preencherTabelaHospedes();
-                } else {
-                    preencherTabelaReservasById();
-                    preencherTabelaHospedesBySobrenome();
-                }
+                    //preencherTabelaReservasById();
+                   // preencherTabelaHospedesBySobrenome();
+
                 //Reservas
 
 
@@ -249,6 +245,7 @@ public class Buscar extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 alterarReserva();
+
             }
         });
         btnEditar.setLayout(null);
@@ -303,7 +300,7 @@ public class Buscar extends JFrame {
             tbHospedes.updateUI();
             
             for (Hospedes hospedes : hospedesList) {
-                modelo.addRow(new Object[]{hospedes.getId(), hospedes.getNome(), hospedes.getSobrenome(), hospedes.getDataNascimento(), hospedes.getNacionalidade(), hospedes.getTelefone(), hospedes.getIdReserva()});
+                modeloHospedes.addRow(new Object[]{hospedes.getId(), hospedes.getNome(), hospedes.getSobrenome(), hospedes.getDataNascimento(), hospedes.getNacionalidade(), hospedes.getTelefone(), hospedes.getIdReserva()});
             }
         } catch (Exception e) {
             throw e;
@@ -324,7 +321,7 @@ public class Buscar extends JFrame {
             tbHospedes.updateUI();
             
             for (Hospedes hospedes : hospedesList) {
-                modelo.addRow(new Object[]{hospedes.getId(), hospedes.getNome(), hospedes.getSobrenome(), hospedes.getDataNascimento(), hospedes.getNacionalidade(), hospedes.getTelefone(), hospedes.getIdReserva()});
+                modeloHospedes.addRow(new Object[]{hospedes.getId(), hospedes.getNome(), hospedes.getSobrenome(), hospedes.getDataNascimento(), hospedes.getNacionalidade(), hospedes.getTelefone(), hospedes.getIdReserva()});
             }
         } catch (Exception e) {
             throw e;
@@ -370,7 +367,7 @@ public class Buscar extends JFrame {
         }
     }
 
-    //DELETE
+    //DELETE OK
     private void deleteReserva(){
         Object objetoNaLinhaSelecionada = modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
         System.out.println(objetoNaLinhaSelecionada);
@@ -387,10 +384,10 @@ public class Buscar extends JFrame {
     
     //EDIT 
 
-    private void alterarReserva() { // testa pra ver ser da certo assim 
-        Object objetoDaLinha = (Object) modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
-        if (objetoDaLinha instanceof Integer) {
-            Integer id = (Integer) objetoDaLinha;
+    private void alterarReserva(){ // testa pra ver ser da certo assim
+        Object objetoDaLinhaSelecionado = modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
+        if (objetoDaLinhaSelecionado instanceof Integer) {
+            Integer id = (Integer) objetoDaLinhaSelecionado;
             Date dataEntrada = (Date) modelo.getValueAt(tbReservas.getSelectedRow(), 1);
             Date dataSaida = (Date) modelo.getValueAt(tbReservas.getSelectedRow(), 2);
             String valor = (String) modelo.getValueAt(tbReservas.getSelectedRow(), 3);
@@ -402,20 +399,6 @@ public class Buscar extends JFrame {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     //Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	
     private void headerMousePressed(java.awt.event.MouseEvent evt) {
         xMouse = evt.getX();
