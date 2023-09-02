@@ -217,8 +217,12 @@ public class Buscar extends JFrame {
                 if (txtBuscar.getText().isEmpty()) {
                     preencherTabela();
                 } else {
-                    preencherTabelaHospedesBySobrenomeAndId();
+                    if (txtBuscar.getText().matches("\\d+")) preencherTabelaReservaById();
+                    else preencherTabelaHospedesBySobrenomeAndId();
+
                 }
+
+
             }
         });
         btnbuscar.setLayout(null);
@@ -240,10 +244,9 @@ public class Buscar extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int reservas = tbReservas.getSelectedRow();
                 int hospedes = tbHospedes.getSelectedRow();
-                if (reservas >= 0){
+                if (reservas >= 0) {
                     alterarReserva();
-                } 
-                else if (hospedes >= 0){
+                } else if (hospedes >= 0) {
                     alterarHospedes();
                 }
             }
@@ -267,10 +270,9 @@ public class Buscar extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int reservas = tbReservas.getSelectedRow();
                 int hospedes = tbHospedes.getSelectedRow();
-                if (reservas >= 0){
+                if (reservas >= 0) {
                     delete();
-                }
-                else if (hospedes >= 0){
+                } else if (hospedes >= 0) {
                     deleteH();
                 }
 
@@ -347,19 +349,28 @@ public class Buscar extends JFrame {
 
 
     private void preencherTabelaHospedesBySobrenomeAndId() {
-
         List<Hospedes> hospedesList = buscarHospedesBySobrenome(txtBuscar);
-        List<Reservas> reservaLista = buscarReservasById(txtBuscar);
         try {
-
-            modeloHospedes.getDataVector();
+            modeloHospedes.getDataVector().clear();
             tbHospedes.updateUI();
-            modelo.getDataVector().clear();
-            tbReservas.updateUI();
 
             for (Hospedes hospedes : hospedesList) {
                 modeloHospedes.addRow(new Object[]{hospedes.getId(), hospedes.getNome(), hospedes.getSobrenome(), hospedes.getDataNascimento(), hospedes.getNacionalidade(), hospedes.getTelefone(), hospedes.getIdReserva()});
             }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    private void preencherTabelaReservaById() {
+
+        List<Reservas> reservaLista = buscarReservasById(txtBuscar);
+
+        try {
+
+            modelo.getDataVector().clear();
+            tbReservas.updateUI();
+
             for (Reservas reservas : reservaLista) {
                 modelo.addRow(new Object[]{reservas.getId(), reservas.getDataEntrada(), reservas.getDataSaida(), reservas.getValor(), reservas.getFormaPagamento()});
             }
@@ -367,6 +378,7 @@ public class Buscar extends JFrame {
             throw e;
         }
     }
+
 
     //DELETE OK
     private void delete() {
@@ -382,6 +394,7 @@ public class Buscar extends JFrame {
             JOptionPane.showMessageDialog(this, "Por favor, selecionar o ID");
         }
     }
+
     private void deleteH() {
         Object objetoNaLinhaSelecionadaHospedes = modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), tbHospedes.getSelectedColumn());
         System.out.println(objetoNaLinhaSelecionadaHospedes);
@@ -394,6 +407,7 @@ public class Buscar extends JFrame {
             JOptionPane.showMessageDialog(this, "Por favor, selecionar o ID");
         }
     }
+
     //EDIT
     private void alterarReserva() { // testa pra ver ser da certo assim
         Object objetoDaLinhaSelecionado = modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
@@ -420,7 +434,7 @@ public class Buscar extends JFrame {
             String nacionalidade = (String) modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), 4);
             String telefone = (String) modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), 5);
 
-            Hospedes hospedes = new Hospedes(id,nome, sobreNome, dataNacimento, nacionalidade, telefone);
+            Hospedes hospedes = new Hospedes(id, nome, sobreNome, dataNacimento, nacionalidade, telefone);
             hospedesController.atualizar(hospedes);
 
         } else {

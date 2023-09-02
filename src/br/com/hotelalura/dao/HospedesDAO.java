@@ -184,7 +184,7 @@ public class HospedesDAO {
 
             while (rset.next()) {
 
-                Hospedes hospedes = new Hospedes(rset.getInt("id"), rset.getString("nome"), rset.getString("sobrenome"), rset.getDate("dataNascimento"), rset.getString("nacionalidade"), rset.getString("telefone"), rset.getInt("idReservas"));
+                Hospedes hospedes = new Hospedes(rset.getInt("id"), rset.getString("nome"), rset.getString("sobrenome"), rset.getDate("dataNascimento"), rset.getString("nacionalidade"), rset.getString("telefone"), rset.getInt("idReserva"));
 
                 hospedesList.add(hospedes);
 
