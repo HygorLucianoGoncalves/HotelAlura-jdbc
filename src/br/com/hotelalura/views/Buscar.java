@@ -265,7 +265,15 @@ public class Buscar extends JFrame {
         btnDeletar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                delete();
+                int reservas = tbReservas.getSelectedRow();
+                int hospedes = tbHospedes.getSelectedRow();
+                if (reservas >= 0){
+                    delete();
+                }
+                else if (hospedes >= 0){
+                    deleteH();
+                }
+
             }
         });
         btnDeletar.setLayout(null);
@@ -344,7 +352,7 @@ public class Buscar extends JFrame {
         List<Reservas> reservaLista = buscarReservasById(txtBuscar);
         try {
 
-            modeloHospedes.getDataVector().clear();
+            modeloHospedes.getDataVector();
             tbHospedes.updateUI();
             modelo.getDataVector().clear();
             tbReservas.updateUI();
@@ -374,7 +382,18 @@ public class Buscar extends JFrame {
             JOptionPane.showMessageDialog(this, "Por favor, selecionar o ID");
         }
     }
-
+    private void deleteH() {
+        Object objetoNaLinhaSelecionadaHospedes = modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), tbHospedes.getSelectedColumn());
+        System.out.println(objetoNaLinhaSelecionadaHospedes);
+        if (objetoNaLinhaSelecionadaHospedes instanceof Integer) {
+            Integer id = (Integer) objetoNaLinhaSelecionadaHospedes;
+            hospedesController.deleta(id);
+            modeloHospedes.removeRow(tbHospedes.getSelectedRow());
+            JOptionPane.showMessageDialog(this, "Item excluído com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecionar o ID");
+        }
+    }
     //EDIT
     private void alterarReserva() { // testa pra ver ser da certo assim
         Object objetoDaLinhaSelecionado = modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
@@ -397,11 +416,11 @@ public class Buscar extends JFrame {
             Integer id = (Integer) objetoDaLinhaSelecionado;
             String nome = (String) modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), 1);
             String sobreNome = (String) modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), 2);
-            Date dataNacimento = (Date) modelo.getValueAt(tbReservas.getSelectedRow(), 3);
+            Date dataNacimento = (Date) modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), 3);
             String nacionalidade = (String) modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), 4);
             String telefone = (String) modeloHospedes.getValueAt(tbHospedes.getSelectedRow(), 5);
 
-            Hospedes hospedes = new Hospedes(nome, sobreNome, dataNacimento, nacionalidade, telefone);
+            Hospedes hospedes = new Hospedes(id,nome, sobreNome, dataNacimento, nacionalidade, telefone);
             hospedesController.atualizar(hospedes);
 
         } else {

@@ -12,6 +12,8 @@ import br.com.hotelalura.factory.ConnectionFactory;
 import br.com.hotelalura.model.Hospedes;
 import br.com.hotelalura.model.Reservas;
 
+import javax.swing.*;
+
 public class HospedesDAO {
 
     public void salvar(Hospedes hospedes) {
@@ -92,7 +94,7 @@ public class HospedesDAO {
 
             pstm.execute();
 
-            System.out.println("Atualizado com sucesso");
+            JOptionPane.showMessageDialog(null,"Hospede Atualizado com sucesso");
 
         } catch (Exception e) {
 
